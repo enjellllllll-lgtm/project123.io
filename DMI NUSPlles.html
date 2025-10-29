@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nusplash — Landing Prototype</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --teal:#023f3f;
+      --accent:#0c6b6b;
+      --muted:#6b8b8b;
+      --bg-1: #f7ffff;
+      --bg-2: #e9fbfb;
+      --card: rgba(255,255,255,0.6);
+      --drop: #c7eef0;
+      --max-width:1200px;
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      margin:0;
+      color:var(--teal);
+      background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container{max-width:var(--max-width); margin:0 auto; padding:28px}
+
+    /* Header */
+    header{display:flex; align-items:center; justify-content:space-between; padding:18px 0; position:sticky; top:0; z-index:50; background:linear-gradient(180deg, rgba(255,255,255,0.35), transparent);}
+    .logo{display:flex; align-items:center; gap:12px}
+    .logo img{height:56px; object-fit:contain}
+    nav{display:flex; align-items:center; gap:18px}
+    nav ul{display:flex; gap:28px; list-style:none; margin:0; padding:0}
+    nav a{text-decoration:none; color:var(--teal); font-weight:600}
+    .nav-cta{background:var(--accent); color:#fff; padding:10px 16px; border-radius:12px; font-weight:700; text-decoration:none}
+
+    .mobile-toggle{display:none; background:transparent; border:0; font-size:22px; cursor:pointer; color:var(--teal)}
+
+    /* Hero */
+    .hero{display:flex; gap:32px; align-items:center; padding:40px 0}
+    .hero .left{flex:1}
+    .hero h1{font-size:48px; line-height:1.02; margin:0 0 18px; font-weight:800; letter-spacing:-0.5px}
+    .hero p{color:var(--muted); max-width:720px; margin:0 0 24px; font-weight:400}
+    .cta{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{background:var(--accent); color:white; padding:12px 20px; border-radius:12px; text-decoration:none; font-weight:700}
+    .btn.ghost{background:transparent; border:2px solid rgba(2,63,63,0.08); color:var(--teal)}
+    .hero .right{flex:0 0 360px; display:flex; justify-content:center; align-items:flex-end}
+    .bottle{max-width:100%; height:auto; transform:translateY(6px); transition:transform .5s cubic-bezier(.2,.9,.2,1)}
+    .hero .right:hover .bottle{transform:translateY(-6px) rotate(-1deg)}
+
+    /* Kisah kami */
+    .story{display:flex; gap:30px; align-items:center; padding:50px 0}
+    .story .text{flex:1}
+    .story h2{font-size:40px; margin:0 0 18px}
+    .story p{color:var(--muted); font-size:16px}
+    .story .image{flex:0 0 420px}
+    .story .image img{width:100%; border-radius:18px; object-fit:cover; box-shadow:0 18px 40px rgba(2,63,63,0.06)}
+
+    /* Why / features */
+    .why{padding:40px 0}
+    .why h2{font-size:36px; text-align:center; margin-bottom:8px}
+    .why p.lead{color:var(--muted); text-align:center; max-width:900px; margin:0 auto 28px}
+    .features{display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:24px}
+    .feature{background:transparent; text-align:center; padding:10px}
+    .drop{width:220px;height:240px;margin:0 auto 14px; position:relative}
+    .drop .bg{position:absolute; inset:0; background: radial-gradient(circle at 30% 30%, rgba(3,99,99,0.12), transparent 40%), var(--drop); border-radius:54% 46% 48% 52% / 60% 60% 40% 40%; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 28px rgba(2,63,63,0.04)}
+    .feature img{max-width:140px}
+    .feature h3{margin:6px 0 6px; font-size:18px}
+    .feature p{color:var(--muted); font-size:14px; margin:0}
+
+    /* Perjalanan */
+    .journey{padding:44px 0}
+    .journey h2{font-size:36px; text-align:center; margin-bottom:18px}
+    .journey .card{background:var(--card); border-radius:28px; padding:12px; display:flex; gap:8px; align-items:stretch; overflow:hidden}
+    .journey .card img{width:33.333%; height:320px; object-fit:cover; border-radius:18px}
+    .journey .card .placeholder{flex:1;background:transparent}
+
+    /* Habit / timeline is already implemented as svg in your draft - we keep container */
+    .timeline-wrap{padding:30px 0;}
+
+    /* Calories / comparison */
+    .calories{display:flex; gap:28px; align-items:center; padding:40px 0}
+    .calories .left{flex:1}
+    .calories h2{font-size:34px; margin:0 0 12px}
+    .calories p{color:var(--muted)}
+    .calories .right{flex:0 0 420px; text-align:center}
+    .compare{display:flex; gap:18px; align-items:end; justify-content:center; margin-top:18px}
+    .compare .item{text-align:center}
+    .compare img{width:100px; display:block; margin:0 auto;border-radius:8px}
+    .cal-bubble{display:inline-block;margin-top:8px;background:#eaf6f6;padding:8px 12px;border-radius:999px;color:var(--teal); font-weight:700; font-size:13px}
+
+    /* Footer */
+    footer{padding:36px 0; text-align:center; color:var(--muted)}
+
+    /* small devices */
+    @media (max-width:980px){
+      .hero{flex-direction:column-reverse; text-align:left}
+      .hero .right{flex:0 0 260px}
+      .story{flex-direction:column-reverse}
+      .features{grid-template-columns:1fr}
+      .journey .card img{height:200px}
+      .calories{flex-direction:column}
+      nav ul{display:none}
+      .mobile-toggle{display:inline-block}
+    }
+
+    /* micro animations */
+    .fade-in{opacity:0; transform:translateY(10px); animation:fadeInUp .7s forwards}
+    .stagger-1{animation-delay:.08s}
+    .stagger-2{animation-delay:.16s}
+    .stagger-3{animation-delay:.24s}
+    @keyframes fadeInUp{to{opacity:1; transform:none}}
+
+    /* small niceties for images inside svg image fallback */
+    svg image{border-radius:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <!-- Pastikan path logo sesuai dengan proyek Anda -->
+        <img src="LOGO DMI fix.png" alt="Nusplash Logo" />
+        <div style="font-weight:700; color:var(--teal); font-size:18px">Nusplash</div>
+      </div>
+
+      <nav>
+        <button class="mobile-toggle" id="menuBtn" aria-label="toggle menu">☰</button>
+        <ul id="navList">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#about">Tentang kami</a></li>
+          <li><a href="#produk">Produk</a></li>
+          <li><a href="#perjalanan">Perjalanan</a></li>
+          <li><a class="nav-cta" href="#order">Pesan sekarang</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="left fade-in">
+        <h1>Segar alami nya<br><strong>NUSPLASH</strong></h1>
+        <p>Segar alami, terang nusantara — air mineral seimbang yang dikemas dekat sumber tanpa disentuh tangan manusia. Nikmati hidrasi sehat sehari-hari.</p>
+        <div class="cta">
+          <a class="btn" href="#produk">Lihat Produk</a>
+          <a class="btn ghost" href="#about">Tentang Kami</a>
+        </div>
+      </div>
+
+      <div class="right fade-in" style="animation-delay:.12s">
+        <!-- Ganti path bottle sesuai file Anda -->
+        <img class="bottle" src="botol.png" alt="Bottle" style="width:320px">
+      </div>
+    </section>
+
+    <!-- Kisah Kami -->
+    <section class="story" id="about">
+      <div class="text fade-in">
+        <h2>Kisah kami</h2>
+        <p>Nusplash berasal dari sumber mata air pegunungan terpilih yang melalui ratusan eksplorasi untuk mendapatkan sumber terbaik yang kaya mineral. Dikemas langsung di sumbernya menggunakan teknologi Mineral Protection System tanpa tersentuh tangan manusia untuk menjaga kualitas air dan mineralnya tetap utuh sampai ke tangan Anda.</p>
+      </div>
+      <div class="image fade-in" style="animation-delay:.1s">
+        <!-- Ganti path ilustrasi / anak minum -->
+        <img src="anakkk.png" alt="Anak minum">
+      </div>
+    </section>
+
+    <!-- Why choose -->
+    <section class="why" id="produk">
+      <h2 class="fade-in">Mengapa Pilih Nusplash?</h2>
+      <p class="lead fade-in" style="animation-delay:.06s">Air mineral murni dengan mineral esensial, dikemas higienis di sumber, dan dilindungi agar kualitasnya tetap terjaga sampai di tanganmu.</p>
+
+      <div class="features">
+        <div class="feature fade-in stagger-1">
+          <div class="drop">
+            <img src="botol.png" alt="bottle small">
+          </div>
+          <h3>Mengandung Mineral Esensial Seimbang</h3>
+          <p>Mineral penting seperti Zn, Ca, Fe, Na terpenuhi untuk kebutuhan harian.</p>
+        </div>
+
+        <div class="feature fade-in stagger-2">
+          <div class="drop">
+            <img src="botol.png" alt="bottle medium">
+          </div>
+          <h3>Proteksi Berlapis</h3>
+          <p>Melindungi mineral esensialnya dengan 3 level proteksi berlapis.</p>
+        </div>
+
+        <div class="feature fade-in stagger-3">
+          <div class="drop">
+            <img src="OKKKKKKK.png" alt="bottle small 2">
+          </div>
+          <h3>Dikemas di Sumbernya</h3>
+          <p>Pengemasan otomatis tanpa tersentuh tangan manusia untuk sanitasi optimal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perjalanan Nusplash -->
+    <section class="journey" id="perjalanan">
+      <h2 class="fade-in">Perjalanan Nusplash</h2>
+      <div class="journey-card card fade-in" style="animation-delay:.08s">
+        <!-- gunakan 3 gambar seperti di desain (ganti path jika perlu) -->
+        <img src="Indonesia Nature.jpg" alt="gunung">
+        <img src="download (35).jpg" alt="sungai">
+        <img src="pabrik.jpg" alt="pabrik">
+        <!-- kosong/white area mirip slide -->
+        <div class="placeholder" style="width:33.333%; background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.95)); border-radius:12px"></div>
+      </div>
+    </section>
+
+    <!-- Timeline / Habit (SVG dari draft Anda) -->
+    <section class="timeline-wrap" id="reminder">
+      <!-- memakai SVG dari draft awal (tetap di sini) -->
+      <div class="fade-in" style="animation-delay:.06s">
+        <h2 style="text-align:center; font-size:36px; margin-bottom:8px">Biasakan dirimu untuk minum air</h2>
+        <p style="text-align:center; color:var(--muted); max-width:900px; margin:0 auto 18px">Menciptakan kebiasaan agar minum air teratur setiap harinya tidak bisa terjadi begitu saja. Pasang alarm pengingat di ponselmu di jam-jam tertentu.</p>
+
+        <div style="display:flex; justify-content:center; padding:12px 0">
+          <svg class="timeline-svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="timeline" style="max-width:760px; width:100%; height:auto">
+            <path d="M60 240 C 220 40, 680 40, 840 240" fill="none" stroke="#0c6b6b" stroke-dasharray="12 8" stroke-width="6" opacity="0.7"/>
+            <g fill="#0c6b6b">
+              <circle cx="90" cy="210" r="18" stroke="#9fe0e2" stroke-width="8" fill="#06363a" />
+              <text x="90" y="205" text-anchor="middle" font-size="12" fill="#fff">09.00</text>
+
+              <circle cx="210" cy="150" r="18" stroke="#9fe0e2" stroke-width="8" fill="#06363a" />
+              <text x="210" y="145" text-anchor="middle" font-size="12" fill="#fff">10.00</text>
+
+              <circle cx="450" cy="120" r="18" stroke="#9fe0e2" stroke-width="8" fill="#06363a" />
+              <text x="450" y="115" text-anchor="middle" font-size="12" fill="#fff">12.00</text>
+
+              <circle cx="620" cy="150" r="18" stroke="#9fe0e2" stroke-width="8" fill="#06363a" />
+              <text x="620" y="145" text-anchor="middle" font-size="12" fill="#fff">14.00</text>
+
+              <circle cx="720" cy="190" r="18" stroke="#9fe0e2" stroke-width="8" fill="#06363a" />
+              <text x="720" y="185" text-anchor="middle" font-size="11" fill="#fff">15.30</text>
+
+              <circle cx="820" cy="240" r="18" stroke="#9fe0e2" stroke-width="8" fill="#06363a" />
+              <text x="820" y="235" text-anchor="middle" font-size="11" fill="#fff">18.00</text>
+            </g>
+
+            <image src="" x="360" y="120" height="250" width="120" preserveAspectRatio="xMidYMid meet" opacity="1"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calories compare -->
+    <section class="calories" id="kalori">
+      <div class="left fade-in">
+        <h2>Perhatikan jumlah kalori minumanmu</h2>
+        <p>Mulai perhatikan kalori dari minuman yang kamu minum untuk menerapkan pola hidup yang lebih sehat. Nusplash memiliki 0 kalori, pilihan terbaik untuk hidrasi tanpa tambahan gula.</p>
+      </div>
+
+      <div class="right fade-in" style="animation-delay:.08s">
+        <div class="compare">
+          <div class="item">
+            <img src="MediaFire_Gallery-removebg-preview.png" alt="minum siap saji">
+            <div class="cal-bubble">120 Kalori</div>
+            <div style="margin-top:8px; color:var(--muted); font-size:13px">Minuman siap saji</div>
+          </div>
+
+          <div class="item">
+            <img src="mogumogu.png" alt="minuman kemasan">
+            <div class="cal-bubble">100 Kalori</div>
+            <div style="margin-top:8px; color:var(--muted); font-size:13px">Minuman kemasan</div>
+          </div>
+
+          <div class="item">
+            <img src="botol.png" alt="nusplash">
+            <div class="cal-bubble">0 Kalori</div>
+            <div style="margin-top:8px; color:var(--muted); font-size:13px">Nusplash</div>
+          </div>
+
+          <div class="item">
+            <img src="cola.png" alt="minuman soda">
+            <div class="cal-bubble">140 Kalori</div>
+            <div style="margin-top:8px; color:var(--muted); font-size:13px">Minuman soda</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simple order block (anchor) -->
+    <section id="order" style="padding:28px 0">
+      <div style="max-width:780px; margin:0 auto; background:var(--card); padding:20px; border-radius:14px">
+        <h3 style="margin-top:0">Pesan Sekarang</h3>
+        <form onsubmit="event.preventDefault(); alert('Terima kasih! Pesanan demo diterima.');">
+          <div style="display:flex; gap:12px; flex-wrap:wrap">
+            <input style="flex:1; padding:12px; border-radius:8px; border:1px solid rgba(0,0,0,0.06)" type="text" placeholder="Nama lengkap" required>
+            <input style="flex:1; padding:12px; border-radius:8px; border:1px solid rgba(0,0,0,0.06)" type="tel" placeholder="No. Whatsapp" required>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap">
+            <select style="padding:12px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); flex:1" required>
+              <option value="">Pilih Produk</option>
+              <option>Botol 600 ml</option>
+              <option>Botol 1500 ml</option>
+            </select>
+            <input style="width:120px; padding:12px; border-radius:8px; border:1px solid rgba(0,0,0,0.06)" type="number" min="1" value="1" required>
+            <button class="btn" style="min-width:160px">Kirim Pesanan</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      &copy; <span id="year"></span> Nusplash — SMK Plus Pelita Nusantara
+    </footer>
+  </div>
+
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // mobile nav toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const navList = document.getElementById('navList');
+    menuBtn && menuBtn.addEventListener('click', () => {
+      if(navList.style.display === 'flex') navList.style.display = 'none';
+      else navList.style.display = 'flex';
+      navList.style.flexDirection = 'column';
+      navList.style.background = 'rgba(255,255,255,0.95)';
+      navList.style.position = 'absolute';
+      navList.style.right = '28px';
+      navList.style.top = '74px';
+      navList.style.padding = '12px';
+      navList.style.borderRadius = '12px';
+      navList.style.boxShadow = '0 10px 30px rgba(2,63,63,0.07)';
+    });
+
+    // smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+        // hide mobile menu after click
+        if(window.innerWidth <= 980 && navList) navList.style.display = 'none';
+      });
+    });
+
+    // small reveal: add fade-in classes when in viewport
+    const fades = document.querySelectorAll('.fade-in');
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(ent => {
+        if(ent.isIntersecting) ent.target.style.animationPlayState = 'running';
+      });
+    }, {threshold:0.12});
+    fades.forEach(el=>{
+      el.style.animationPlayState = 'paused';
+      obs.observe(el);
+    });
+  </script>
+</body>
+</html>
